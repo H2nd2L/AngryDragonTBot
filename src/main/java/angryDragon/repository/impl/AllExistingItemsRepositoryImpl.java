@@ -3,11 +3,12 @@ package angryDragon.repository.impl;
 import angryDragon.domain.item.Item;
 import angryDragon.repository.AllExistingItemsRepository;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepository {
-    private final List<Item> allItems = new ArrayList<>();
+    private final Set<Item> allItems = new HashSet<>();
 
     @Override
     public void addItem(Item item){
@@ -30,18 +31,9 @@ public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepositor
     }
 
     @Override
-    public List <Item> getItemsByIds(List<Long> itemsIds){
+    public List <Item> getItemsByIds(List<Long> ids){
         try {
-            List <Item> returningItems = new ArrayList<>();
-            for (long itemId : itemsIds){
-                for (Item item : allItems){
-                    if (item.getItemId() == itemId){
-                        returningItems.add(item);
-                        break;
-                    }
-                }
-            }
-            return returningItems;
+            return allItems.stream() .filter(item -> ids.contains(item.getItemId())) .toList();
         } catch (Exception e){ // написать в будущем разные кетчи
             System.out.println("Ошибка в AllExistingItems.getItemsByIds: " + e.getMessage());
         }
@@ -50,7 +42,7 @@ public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepositor
     }
 
     @Override
-    public List<Item> getInventory(){
+    public Set<Item> getAllExistingItems(){
         return allItems;
     }
 

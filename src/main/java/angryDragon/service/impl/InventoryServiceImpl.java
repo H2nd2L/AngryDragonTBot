@@ -2,23 +2,23 @@ package angryDragon.service.impl;
 
 import angryDragon.service.InventoryService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 public class InventoryServiceImpl implements InventoryService {
     //HashMap<PetId, List[ItemId]>
-    HashMap<String, List <String>> itemsOfPet = new HashMap<>();
+    Map<String, List <String>> itemsOfPet = new HashMap<>();
+    //Map<String, Set<String>> itemsOfPet = new HashMap<>();
 
     @Override
-    public void addItemsToPet(String petId, List<String> addedItemsId){
+    public void addItemsToPet(String petId, List<String> itemsIdsToAdd){
         try{
-            //itemsOfPet.putIfAbsent();
-            itemsOfPet.merge(petId, addedItemsId,
-                    (oldList, newList) -> {oldList.addAll(newList);
-                    return oldList;
-            });
+            itemsOfPet.computeIfAbsent(petId, k -> new ArrayList<>())
+                    .addAll(itemsIdsToAdd);
+//            itemsOfPet.merge(petId, itemsIdsToAdd,
+//                    (oldList, newList) -> {oldList.addAll(newList);
+//                    return oldList;
+//            });
         } catch (Exception e){
             System.out.println("Ошибка в InventoryService.addItemsToPet: " + e.getMessage());
         }
@@ -38,12 +38,14 @@ public class InventoryServiceImpl implements InventoryService {
 
     // убрать вещи из инвентаря
     @Override
-    public boolean takeAwaySomeItemsOfPet(String petId, List<String> takenItemsId){
+    public boolean removeItemsByIds(String petId, List<String> takenItemsId){
         try{
             List<String> itemsId = itemsOfPet.get(petId);
-            int currentSize = itemsId.size();
-            itemsId.removeIf(takenItemsId::contains);
-            return currentSize != itemsId.size();
+            if (itemsId == null || itemsId.isEmpty()) {
+                return false;
+            }
+
+            return itemsId.removeAll(takenItemsId);
         } catch(Exception e){
             System.out.println("Ошибка в InventoryService.takeAwaySomeItemsOfPet: " + e.getMessage());
         }
@@ -51,4 +53,3 @@ public class InventoryServiceImpl implements InventoryService {
         return false;
     }
 }
-

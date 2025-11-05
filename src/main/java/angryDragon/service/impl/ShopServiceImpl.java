@@ -47,12 +47,15 @@ public class ShopServiceImpl implements ShopService {
             return "This user does not exist.";
         }
 
-        if (userCash - itemPrice < 0){
+        if (userCash < itemPrice){
             return "Not enough money.";
         }
 
-        walletsRepository.setUserCashValue(userId, (userCash-itemPrice));
-        return "Transaction complete.";
+        if (walletsRepository.setUserCashValue(userId, (userCash-itemPrice)).equals("User got his money.")){
+            return "Transaction complete.";
+        }
+
+        return "User didn't get his money. Something wrong.";
     }
 
     @Override
@@ -73,6 +76,4 @@ public class ShopServiceImpl implements ShopService {
         walletsRepository.setUserCashValue(userId, (userCash+itemPrice));
         return "Transaction complete.";
     }
-
-
 }
