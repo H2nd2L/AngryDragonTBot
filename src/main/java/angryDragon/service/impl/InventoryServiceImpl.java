@@ -6,7 +6,6 @@ import java.util.*;
 
 
 public class InventoryServiceImpl implements InventoryService {
-    //HashMap<PetId, List[ItemId]>
     Map<String, List <String>> itemsOfPet = new HashMap<>();
 
     @Override
@@ -19,7 +18,6 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
-    // показать ID предметов из инвентаря определённого питомца
     @Override
     public List<String> showItemsOfPet(String petId){
         try{
@@ -31,7 +29,6 @@ public class InventoryServiceImpl implements InventoryService {
         return List.of();
     }
 
-    // убрать вещи из инвентаря
     @Override
     public boolean removeItemsByIds(String petId, List<String> takenItemsId){
         try{
