@@ -23,7 +23,7 @@ public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepositor
                     return item;
                 }
             }
-        } catch(Exception e){ // написать в будущем разные кетчи
+        } catch(Exception e){
             System.out.println("Ошибка в AllExistingItems.getItemById: " + e.getMessage());
         }
 
@@ -34,7 +34,7 @@ public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepositor
     public List <Item> getItemsByIds(List<Long> ids){
         try {
             return allItems.stream() .filter(item -> ids.contains(item.getItemId())) .toList();
-        } catch (Exception e){ // написать в будущем разные кетчи
+        } catch (Exception e){
             System.out.println("Ошибка в AllExistingItems.getItemsByIds: " + e.getMessage());
         }
 
