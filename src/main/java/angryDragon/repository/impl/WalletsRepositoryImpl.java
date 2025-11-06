@@ -21,7 +21,7 @@ public class WalletsRepositoryImpl implements WalletsRepository {
                 return wallet.getCashValue();
             }
         }
-        return -1; // Пользователя не существует.
+        return -1;
     }
 
     @Override
