@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopServiceImpl implements ShopService {
-    private final List<Long> currentShopCatalog = new ArrayList<>();
+    private final List<String> currentShopCatalog = new ArrayList<>();
     private final AllExistingItemsRepository allExistingItemsRepository;
     private final WalletsRepository walletsRepository;
 
@@ -19,17 +19,17 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<Long> getCurrentShopCatalog(){
+    public List<String> getCurrentShopCatalog(){
         return currentShopCatalog;
     }
 
     @Override
-    public void addItemIdToCatalog(long itemId){
+    public void addItemIdToCatalog(String itemId){
         currentShopCatalog.add(itemId);
     }
 
     @Override
-    public String buyItem(long itemId, String userId){
+    public String buyItem(String itemId, String userId){
         Item currentItem = allExistingItemsRepository.getItemById(itemId); // сделать проверку на наличие товара в магазине
 
         if (currentItem == null){
@@ -59,7 +59,7 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public String sellItem(long itemId, String userId){
+    public String sellItem(String itemId, String userId){
         Item currentItem = allExistingItemsRepository.getItemById(itemId);
 
         if (currentItem == null){

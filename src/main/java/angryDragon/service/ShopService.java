@@ -3,11 +3,11 @@ package angryDragon.service;
 import java.util.List;
 
 public interface ShopService {
-    List<Long> getCurrentShopCatalog();
+    List<String> getCurrentShopCatalog();
 
-    void addItemIdToCatalog(long itemId);
+    void addItemIdToCatalog(String itemId);
 
-    String buyItem(long itemId, String userId);
+    String buyItem(String itemId, String userId);
 
-    String sellItem(long itemId, String userId);
+    String sellItem(String itemId, String userId);
 }

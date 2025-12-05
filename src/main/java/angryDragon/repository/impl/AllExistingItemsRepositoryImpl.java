@@ -16,7 +16,7 @@ public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepositor
     }
 
     @Override
-    public Item getItemById(long itemId){
+    public Item getItemById(String itemId){
         try{
             for (Item item : allItems){
                 if (item.getItemId() == itemId){
@@ -31,7 +31,7 @@ public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepositor
     }
 
     @Override
-    public List <Item> getItemsByIds(List<Long> ids){
+    public List <Item> getItemsByIds(List<String> ids){
         try {
             return allItems.stream() .filter(item -> ids.contains(item.getItemId())) .toList();
         } catch (Exception e){
