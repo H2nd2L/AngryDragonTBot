@@ -7,7 +7,7 @@ import angryDragon.domain.item.WhatItemRestore;
 import angryDragon.domain.pet.Pet;
 import angryDragon.domain.status.Status;
 import angryDragon.domain.user.User;
-import angryDragon.repository.AllExistingItemsRepository;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,14 +25,6 @@ public class App {
         this.serviceComponent = serviceComponent;
     }
 
-//    public App() {
-//        this(RepositoryComponent.RepositoryMode.IN_MEMORY);
-//    }
-//
-//    public App(RepositoryComponent.RepositoryMode mode){
-//        this.repositoryComponent = new RepositoryComponent(mode);
-//        this.serviceComponent = new ServiceComponent(repositoryComponent);
-//    }
 
     public void start(){
         printWelcome();
@@ -41,27 +33,31 @@ public class App {
             System.out.print("\nВведите команду : ");
             String command = scanner.nextLine().trim().toLowerCase();
 
-                switch(command){
-                    case "/games" -> games();
-                    case "/add_pet" -> addPet();
-                    case "/add_user" -> addUser();
-                    case "/status_of_pet" -> statusOfPet();
-                    case "/show_inventory" -> inventory();
-                    case "/wallet" -> wallet();
-                    //case "/items_of_my_pet" -> itemsOfPet(); тоже хз
-                    case "/shop" -> shop(); //покупка и продажа сделать , добавление и убирание предмета на полку из allExisting items
-                    case "/show_all_items" -> allExistingItems();
-                    case "/add_item" -> addItem(); //добавление предмета в allExistingItems
-                    case "/use_item" -> useItem(); // использование через инвентарь
-                    case "/help" -> printHelp();
-                    default -> System.out.println("Неизвестная команда. Введите /help");
-                }
+            switch(command){
+                case "/games" -> games();
+                case "/add_pet" -> addPet();
+                case "/add_user" -> addUser();
+                case "/status_of_pet" -> statusOfPet();
+                case "/show_inventory" -> inventory();
+                case "/wallet" -> wallet();
+                case "/shop" -> shop();
+                case "/show_all_items" -> allExistingItems();
+                case "/add_item" -> addItem();
+                case "/use_item" -> useItem();
+                case "/help" -> printHelp();
+                default -> System.out.println("Неизвестная команда. Введите /help");
+            }
         }
     }
 
     private void useItem() {
         System.out.print("Введите ID питомца: ");
         String petId = scanner.nextLine().trim();
+
+        if (!petId.startsWith("P")){
+            System.out.println("Неверный ID питомца!");
+            return;
+        }
 
         Pet pet = repositoryComponent.getPetRepository().findByPetId(petId);
 
@@ -71,9 +67,13 @@ public class App {
         }
 
         System.out.print("Введите ID предмета: ");
-        // проверка через while на то, что ID корректный (начинается на I)
         String itemId = scanner.nextLine().trim();
+        List<String> items = serviceComponent.getInventoryService().showItemsOfPet(petId);
 
+        if (!items.contains(itemId)) {
+            System.out.println("У питомца нет такого предмета.");
+            return;
+        }
         Item item = repositoryComponent.getAllExistingItemsRepository().getItemById(itemId);
 
         if (item == null) {
@@ -81,52 +81,77 @@ public class App {
             return;
         }
 
-        List<String> items = serviceComponent.getInventoryService().showItemsOfPet(petId);
-
-        if (!items.contains(itemId)) {
-            System.out.println("У питомца нет такого предмета.");
-            return;
-        }
-
-        Status status = pet.getStatus();
-        int itemRegenAmount = item.getItemRegenerationAmount();
-        WhatItemRestore itemType = item.getItemType();
-
-        if (itemType == WhatItemRestore.ENERGY){
-            int newStatus = status.getEnergy() + itemRegenAmount;
-            status.setEnergy(newStatus);
-            System.out.println("Предмет использован! Энергия теперь: " + newStatus);
-        }
-        else if(itemType == WhatItemRestore.HUNGER){
-            int newStatus = status.getHunger() + itemRegenAmount;
-            status.setHunger(newStatus);
-            System.out.println("Предмет использован! Голод теперь: " + newStatus);
-        }
-        else{
-            int newStatus = status.getJoy() + itemRegenAmount;
-            status.setJoy(newStatus);
-            System.out.println("Предмет использован! Радость теперь: " + newStatus);
-        }
-
+        ItemEffects(pet, item);
         serviceComponent.getInventoryService().removeItemsByIds(petId, List.of(itemId));
     }
+    private void ItemEffects(Pet pet, Item item){
+        Status status = pet.getStatus();
+        int newStatusValue;
+        String message;
 
+        switch (item.getItemType()) {
+            case ENERGY -> {
+                newStatusValue = status.getEnergy() + item.getItemRegenerationAmount();
+                status.setEnergy(newStatusValue);
+                message = "Энергия теперь: " + newStatusValue;
+            }
+            case HUNGER -> {
+                newStatusValue = status.getHunger() + item.getItemRegenerationAmount();
+                status.setHunger(newStatusValue);
+                message = "Голод теперь: " + newStatusValue;
+            }
+            case JOY -> {
+                newStatusValue = status.getJoy() + item.getItemRegenerationAmount();
+                status.setJoy(newStatusValue);
+                message = "Радость теперь: " + newStatusValue;
+            }
+            default -> message = "Предмет не имеет эффекта.";
+        }
+        System.out.println("Предмет использован! " + message);
+    }
     private void addItem() {
 
-        System.out.print("\nВведите ID предмета (Пример: I21313): ");
+        System.out.print("\nВведите ID предмета");
         String itemId = scanner.nextLine().trim();
+
+        if (repositoryComponent.getAllExistingItemsRepository().getItemById(itemId) != null) {
+            System.out.println("Предмет с таким ID уже существует!");
+            return;
+        }
 
         System.out.print("\nВведите название предмета: ");
         String name = scanner.nextLine().trim();
 
         System.out.print("\nВведите цену предмета: ");
-        int price = Integer.parseInt(scanner.nextLine().trim());
+        int price;
+        try {
+            price = Integer.parseInt(scanner.nextLine().trim());
+            if (price <= 0) {
+                System.out.println("Цена должна быть больше 0!");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Некорректная цена!");
+            return;
+        }
 
-        System.out.print("\nВведите тип статуса");
-        WhatItemRestore itemType = WhatItemRestore.valueOf(scanner.nextLine().trim().toUpperCase());
+        System.out.print("\nВведите тип статуса (ENERGY, HUNGER, JOY): ");
+        WhatItemRestore itemType;
+        try {
+            itemType = WhatItemRestore.valueOf(scanner.nextLine().trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Неверный тип статуса!");
+            return;
+        }
 
         System.out.print("\nВведите сколько восстанавливает статуса: ");
-        int regeneration = Integer.parseInt(scanner.nextLine().trim());
+        int regeneration;
+        try {
+            regeneration = Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Некорректное число восстановления!");
+            return;
+        }
 
         Item item = new Item(itemId, name, regeneration, itemType, price);
 
@@ -147,21 +172,22 @@ public class App {
         System.out.println("Все существующие предметы:");
 
         for (Item item : items) {
-            System.out.print("\nID: " + item.getItemId() +
-                    "\nНазвание: " + item.getItemName() +
-                    "\nЦена: " + item.getItemPrice() +
-                    "\nТип: " + item.getItemType() +
-                    "\nВосстановление энергии: " + item.getItemRegenerationAmount() +
-                    "\n");
+            System.out.println(getItemInfo(item));
         }
+    }
+
+
+    private String getItemInfo(Item item){
+        return  "ID: " + item.getItemId() +
+                "\nНазвание: " + item.getItemName() +
+                "\nЦена: " + item.getItemPrice() +
+                "\nТип: " + item.getItemType() +
+                "\nВосстановление энергии: " + item.getItemRegenerationAmount() +
+                "\n";
     }
 
     private void games() {
         System.out.println("    Список игр   ");
-        // выводится список существующих игр
-        System.out.print("\nВыбери игру: ");
-        String game = scanner.nextLine().trim().toLowerCase();
-        //запуск игры
     }
 
     private void addPet(){
@@ -169,15 +195,16 @@ public class App {
         String userId = scanner.nextLine().trim();
 
         if (!userId.startsWith("U")){
-            System.out.println("Неверный ID пользователя!"); // закольцевать
+            System.out.println("Неверный ID пользователя!");
             return;
         }
+
 
         System.out.print("\nВведите ID питомца: ");
         String petId = scanner.nextLine().trim();
 
-        if (!petId.startsWith("P")){ // закольцевать
-            System.out.println("Неверный ID питомца!");
+        if (!petId.startsWith("P") || repositoryComponent.getPetRepository().findByPetId(petId) != null) {
+            System.out.println("Неверный или уже существующий ID питомца!");
             return;
         }
 
@@ -197,6 +224,10 @@ public class App {
             System.out.println("Неверный ID пользователя!");
             return;
         }
+        if (repositoryComponent.getUserRepository().findById(userId) != null) {
+            System.out.println("Пользователь с таким ID уже существует!");
+            return;
+        }
 
         System.out.print("\nВведите имя пользователя: ");
         String userName = scanner.nextLine().trim();
@@ -205,29 +236,33 @@ public class App {
     }
 
     private void statusOfPet(){
-        System.out.print("\nВведите ID пользователя или питомца: ");
+        System.out.print("\nВведите ID питомца: ");
+        String petId = scanner.nextLine().trim();
+
+        if (!petId.startsWith("P")){
+            System.out.println("Неверный ID питомца!"); // закольцевать
+            return;
+        }
 
         while(true){
             String Id = scanner.nextLine().trim();
-            if(Id.startsWith("P")){
-                Pet pet = repositoryComponent.getPetRepository().findByPetId(Id);
-                Status petStatus = pet.getStatus();
-                System.out.println("Энергия: " + petStatus.getEnergy());
-                System.out.println("Радость: " + petStatus.getJoy());
-                System.out.println("Голод: " + petStatus.getHunger());
-                break;
-            }
-            else if(Id.startsWith("U")){
-                Pet pet = repositoryComponent.getPetRepository().findByUserId(Id);
-                Status petStatus = pet.getStatus();
-                System.out.println("Энергия: " + petStatus.getEnergy());
-                System.out.println("Радость: " + petStatus.getJoy());
-                System.out.println("Голод: " + petStatus.getHunger());
-                break;
-            }
-            else{
-                System.out.println("Неверный ID!");
-                System.out.print("\nВведите ID ещё раз ");
+            switch(petId.charAt(0)){
+                case 'P' -> {
+                    Pet pet = repositoryComponent.getPetRepository().findByPetId(Id);
+                    Status petStatus = pet.getStatus();
+                    System.out.println("Энергия: " + petStatus.getEnergy() + " Радость: " + petStatus.getJoy() + " Голод: " + petStatus.getHunger());
+                    return;
+                }
+                case 'U' -> {
+                    Pet pet = repositoryComponent.getPetRepository().findByUserId(Id);
+                    Status petStatus = pet.getStatus();
+                    System.out.println("Энергия: " + petStatus.getEnergy() + " Радость: " + petStatus.getJoy() + " Голод: " + petStatus.getHunger());
+                    return;
+                }
+                default -> {
+                    System.out.println("Неверный ID!");
+                    System.out.print("\nВведите ID ещё раз ");
+                }
             }
         }
 
@@ -238,7 +273,7 @@ public class App {
         String petId = scanner.nextLine().trim();
 
         if (!petId.startsWith("P")){
-            System.out.println("Неверный ID питомца!"); // закольцевать
+            System.out.println("Неверный ID питомца!");
             return;
         }
 
@@ -257,23 +292,10 @@ public class App {
         }
 
         System.out.println("\nИнвентарь питомца:");
-        for(String itemId : itemIds){
+        for (String itemId : itemIds) {
             Item item = repositoryComponent.getAllExistingItemsRepository().getItemById(itemId);
-
-            if(item == null){
-                System.out.println(itemId + " - <предмет не найден>");
-                continue;
-            }
-
-            System.out.println(
-                    "\n: " + item.getItemId() +
-                    "\nНазвание: " + item.getItemName() +
-                    "\nЦена: " + item.getItemPrice() +
-                    "\nСколько восстанавливает энергии этот предмет: " + item.getItemRegenerationAmount() +
-                    "\nТип: " + item.getItemType() +
-                    "\n");
+            System.out.println(getItemInfo(item));
         }
-
     }
 
     private void wallet(){
@@ -307,6 +329,17 @@ public class App {
         System.out.print("Введите ID пользователя: "); // проверка
         String userId = scanner.nextLine().trim();
 
+        if (!userId.startsWith("U")){
+            System.out.println("Неверный ID пользователя!");
+            return;
+        }
+        User user = repositoryComponent.getUserRepository().findById(userId);
+
+        if(user == null){
+            System.out.println("Пользователь не найден.");
+            return;
+        }
+
         System.out.print("Введите ID предмета: "); // проверка
         String itemId = scanner.nextLine().trim();
 
@@ -317,23 +350,44 @@ public class App {
         }
     }
 
+
+
     private void printWelcome(){
-        System.out.println("    !!!!!!ПРИВЕТИКИ!!!!!");
-        printHelp();
+        String availableCommandsDescription = """
+        !!!!!!ПРИВЕТИКИ!!!!!
+        /add_pet - Добавить питомца
+        /add_user - Добавить пользователя
+        /status_of_pet - Просмотр энергии питомца
+        /inventory - Инвентарь питомца
+        /wallet - Кошелек
+        /shop - Магазин
+        /show_all_items - Показать все предметы
+        /add_item - Добавить предмет
+        /use_item - Использовать предмет
+        /help - Справка
+    """;
+        System.out.println(availableCommandsDescription);
     }
 
 
     private void printHelp(){
-        System.out.println("\nДоступные команды:");
-        System.out.println("  /add_pet           - Добавить питомца");
-        System.out.println("  /add_user          - Добавить пользователя");
-        System.out.println("  /status_of_pet     - Просмотр энергии питомца");
-        System.out.println("  /inventory         - Инвентарь питомца");
-        System.out.println("  /wallet            - Кошелек");
-        System.out.println("  /shop              - Магазин");
-        System.out.println("  /help              - Эта справка");
+        System.out.println("""
+                /add_pet - Добавить питомца
+                /add_user - Добавить пользователя
+                /status_of_pet - Просмотр энергии питомца
+                /inventory - Инвентарь питомца
+                /wallet - Кошелек
+                /shop - Магазин
+                /show_all_items - Показать все предметы
+                /add_item - Добавить предмет
+                /use_item - Использовать предмет
+                /help - Справка
+                
+                ID пользователя должен начинаться с U (Пример: U12352)
+                ID питомца должен начинаться с P (Пример: P32111)
+                ID предмета должен начинаться с I (Пример: I25132)
+                """);
     }
-
 
 }
 
