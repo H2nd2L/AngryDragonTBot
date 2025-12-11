@@ -1,13 +1,13 @@
 package angryDragon.domain.item;
 
 public class Item {
-    private final long itemId;
+    private final String itemId;
     private final String itemName;
     private final int itemRegenerationAmount;
     private final WhatItemRestore whatItemRestore;
     private final int itemPrice;
 
-    public Item(long itemId, String itemName, int itemValue, WhatItemRestore whatItemRestore, int itemPrice){
+    public Item(String itemId, String itemName, int itemValue, WhatItemRestore whatItemRestore, int itemPrice){
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemRegenerationAmount = itemValue;
@@ -15,7 +15,7 @@ public class Item {
         this.itemPrice = itemPrice;
     }
 
-    public long getItemId() {
+    public String getItemId() {
         return itemId;
     }
 

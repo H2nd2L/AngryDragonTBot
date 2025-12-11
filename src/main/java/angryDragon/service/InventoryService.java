@@ -7,5 +7,5 @@ public interface InventoryService {
 
     List<String> showItemsOfPet(String petId);
 
-    boolean takeAwaySomeItemsOfPet(String petId, List<String> takenItemsId);
+    boolean removeItemsByIds(String petId, List<String> takenItemsId);
 }
