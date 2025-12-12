@@ -9,10 +9,10 @@ public class InventoryServiceImpl implements InventoryService {
     Map<String, List <String>> itemsOfPet = new HashMap<>();
 
     @Override
-    public void addItemsToPet(String petId, List<String> itemsIdsToAdd){
+    public void addItemToPet(String petId, String addedItemId){
         try{
             itemsOfPet.computeIfAbsent(petId, k -> new ArrayList<>())
-                    .addAll(itemsIdsToAdd);
+                    .add(addedItemId);
         } catch (Exception e){
             System.out.println("Ошибка в InventoryService.addItemsToPet: " + e.getMessage());
         }
@@ -30,18 +30,12 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public boolean removeItemsByIds(String petId, List<String> takenItemsId){
+    public void removeItemById(String petId, String takenItemId){
         try{
             List<String> itemsId = itemsOfPet.get(petId);
-            if (itemsId == null || itemsId.isEmpty()) {
-                return false;
-            }
-
-            return itemsId.removeAll(takenItemsId);
+            itemsId.remove(takenItemId);
         } catch(Exception e){
             System.out.println("Ошибка в InventoryService.takeAwaySomeItemsOfPet: " + e.getMessage());
         }
-
-        return false;
     }
 }

@@ -25,13 +25,11 @@ public class WalletsRepositoryImpl implements WalletsRepository {
     }
 
     @Override
-    public String setUserCashValue(String userId, int newCashAmount){
+    public void setUserCashValue(String userId, int newCashAmount){
         for (Wallet wallet : wallets){
             if (wallet.getUserId().equals(userId)){
                 wallet.setCashValue(newCashAmount);
-                return "User got his money.";
             }
         }
-        return "User doesn't exist.";
     }
 }

@@ -3,9 +3,9 @@ package angryDragon.service;
 import java.util.List;
 
 public interface InventoryService {
-    void addItemsToPet(String petId, List<String> addedItemsId);
+    void addItemToPet(String petId, String addedItemId);
 
     List<String> showItemsOfPet(String petId);
 
-    boolean removeItemsByIds(String petId, List<String> takenItemsId);
+    void removeItemById(String petId, String takenItemId);
 }

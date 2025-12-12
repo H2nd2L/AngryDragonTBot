@@ -19,23 +19,12 @@ public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepositor
     public Item getItemById(String itemId){
         try{
             for (Item item : allItems){
-                if (item.getItemId() == itemId){
+                if (item.getItemId().equals(itemId)){
                     return item;
                 }
             }
         } catch(Exception e){
             System.out.println("Ошибка в AllExistingItems.getItemById: " + e.getMessage());
-        }
-
-        return null;
-    }
-
-    @Override
-    public List <Item> getItemsByIds(List<String> ids){
-        try {
-            return allItems.stream() .filter(item -> ids.contains(item.getItemId())) .toList();
-        } catch (Exception e){
-            System.out.println("Ошибка в AllExistingItems.getItemsByIds: " + e.getMessage());
         }
 
         return null;
