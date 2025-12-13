@@ -7,5 +7,5 @@ public interface WalletsRepository {
 
     int getUserCashValue(String userId);
 
-    String setUserCashValue(String userId, int newCashAmount);
+    void setUserCashValue(String userId, int newCashAmount);
 }

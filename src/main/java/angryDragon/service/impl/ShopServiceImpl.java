@@ -8,6 +8,7 @@ import angryDragon.service.ShopService;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ShopServiceImpl implements ShopService {
     private final List<String> currentShopCatalog = new ArrayList<>();
     private final AllExistingItemsRepository allExistingItemsRepository;
@@ -29,51 +30,12 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public String buyItem(String itemId, String userId){
-        Item currentItem = allExistingItemsRepository.getItemById(itemId); // сделать проверку на наличие товара в магазине
-
-        if (currentItem == null){
-            return "This item does not exist.";
-        }
-
-        if(!currentShopCatalog.contains(currentItem.getItemId())){
-            return "You can not buy this item.";
-        }
-
-        int itemPrice = currentItem.getItemPrice();
-        int userCash = walletsRepository.getUserCashValue(userId);
-
-        if (userCash == -1){
-            return "This user does not exist.";
-        }
-
-        if (userCash < itemPrice){
-            return "Not enough money.";
-        }
-
-        if (walletsRepository.setUserCashValue(userId, (userCash-itemPrice)).equals("User got his money.")){
-            return "Transaction complete.";
-        }
-
-        return "User didn't get his money. Something wrong.";
+    public void buyItem(String userId, int itemPrice, int userCash){
+        walletsRepository.setUserCashValue(userId, (userCash-itemPrice));
     }
 
     @Override
-    public String sellItem(String itemId, String userId){
-        Item currentItem = allExistingItemsRepository.getItemById(itemId);
-
-        if (currentItem == null){
-            return "This item does not exist.";
-        }
-
-        int itemPrice = currentItem.getItemPrice();
-        int userCash = walletsRepository.getUserCashValue(userId);
-
-        if (userCash == -1){
-            return "This user does not exist.";
-        }
-
+    public void sellItem(String userId, int itemPrice, int userCash){
         walletsRepository.setUserCashValue(userId, (userCash+itemPrice));
-        return "Transaction complete.";
     }
 }

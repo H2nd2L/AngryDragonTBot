@@ -6,9 +6,9 @@ public class Status {
     private int joy;
 
     public Status(){
-        this.energy = 100;
-        this.hunger = 100;
-        this.joy = 100;
+        this.energy = 50;
+        this.hunger = 50;
+        this.joy = 50;
     }
 
     public int getEnergy(){
@@ -24,14 +24,14 @@ public class Status {
     }
 
     public void setEnergy(int valueOfEnergy){
-        this.energy = valueOfEnergy;
+        this.energy = Math.min(valueOfEnergy, 100);
     }
 
     public void setHunger(int valueOfHunger){
-        this.hunger = valueOfHunger;
+        this.hunger = Math.min(valueOfHunger, 100);
     }
 
     public void setJoy(int valueOfJoy){
-        this.joy = valueOfJoy;
+        this.joy = Math.min(valueOfJoy, 100);
     }
 }

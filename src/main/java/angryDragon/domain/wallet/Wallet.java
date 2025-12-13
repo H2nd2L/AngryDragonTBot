@@ -4,7 +4,7 @@ public class Wallet {
     private final String userId;
     private int cashValue;
 
-    public Wallet(String userId, int cashValue) {
+    public Wallet(String userId) {
         this.userId = userId;
         this.cashValue = 100;
     }

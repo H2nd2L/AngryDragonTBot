@@ -11,7 +11,5 @@ public interface AllExistingItemsRepository {
 
     Item getItemById(String itemId);
 
-    List<Item> getItemsByIds(List<String> ids);
-
     Set<Item> getAllExistingItems();
 }

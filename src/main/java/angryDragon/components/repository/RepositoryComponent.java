@@ -4,54 +4,27 @@ import angryDragon.repository.PetRepository;
 import angryDragon.repository.UsersRepository;
 import angryDragon.repository.AllExistingItemsRepository;
 import angryDragon.repository.WalletsRepository;
+import angryDragon.repository.impl.AllExistingItemsRepositoryImpl;
 import angryDragon.repository.impl.PetRepositoryImpl;
 import angryDragon.repository.impl.UsersRepositoryImpl;
 import angryDragon.repository.impl.WalletsRepositoryImpl;
-import angryDragon.repository.impl.AllExistingItemsRepositoryImpl;
+
 
 public class RepositoryComponent {
-
-    private final UsersRepository userRepository;
+    private final UsersRepository usersRepository;
     private final AllExistingItemsRepository allExistingItemsRepository;
     private final WalletsRepository walletsRepository;
     private final PetRepository petRepository;
 
-    public RepositoryComponent(UsersRepository userRepository, AllExistingItemsRepository allExistingItemsRepository, WalletsRepository walletsRepository, PetRepository petRepository) {
-        this.userRepository = userRepository;
-        this.allExistingItemsRepository = allExistingItemsRepository;
-        this.walletsRepository = walletsRepository;
-        this.petRepository = petRepository;
+    public RepositoryComponent() {
+        this.usersRepository = new UsersRepositoryImpl();
+        this.allExistingItemsRepository = new AllExistingItemsRepositoryImpl();
+        this.walletsRepository = new WalletsRepositoryImpl();
+        this.petRepository = new PetRepositoryImpl();
     }
 
-//    public enum RepositoryMode{
-//        IN_MEMORY,
-//        DATABASE
-//    }
-//
-//    public RepositoryComponent(){
-//        this(RepositoryMode.IN_MEMORY);
-//    }
-//
-//    public RepositoryComponent(RepositoryMode mode){
-//        switch(mode){
-//            case DATABASE:
-//                this.userRepository = new UsersRepositoryImpl();
-//                this.walletsRepository = new WalletsRepositoryImpl();
-//                this.allExistingItemsRepository = new AllExistingItemsRepositoryImpl();
-//                this.petRepository = new PetRepositoryImpl();
-//                break;
-//            case IN_MEMORY:
-//            default:
-//                this.userRepository = new UsersRepositoryImpl();
-//                this.walletsRepository = new WalletsRepositoryImpl();
-//                this.allExistingItemsRepository = new AllExistingItemsRepositoryImpl();
-//                this.petRepository = new PetRepositoryImpl();
-//                break;
-//        }
-//    }
-
-    public UsersRepository getUserRepository(){
-        return userRepository;
+    public UsersRepository getUsersRepository(){
+        return usersRepository;
     }
 
     public WalletsRepository getWalletsRepository(){

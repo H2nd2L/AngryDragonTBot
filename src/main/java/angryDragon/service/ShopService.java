@@ -7,7 +7,7 @@ public interface ShopService {
 
     void addItemIdToCatalog(String itemId);
 
-    String buyItem(String itemId, String userId);
+    void buyItem(String userId, int itemPrice, int userCash);
 
-    String sellItem(String itemId, String userId);
+    void sellItem(String userId, int itemPrice, int userCash);
 }
