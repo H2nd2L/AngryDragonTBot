@@ -2,12 +2,12 @@ package angryDragon.components;
 
 import angryDragon.components.repository.RepositoryComponent;
 import angryDragon.components.service.ServiceComponent;
-import angryDragon.domain.item.Item;
-import angryDragon.domain.item.WhatItemRestore;
-import angryDragon.domain.pet.Pet;
-import angryDragon.domain.status.Status;
-import angryDragon.domain.user.User;
-import angryDragon.domain.wallet.Wallet;
+import angryDragon.business.domain.item.Item;
+import angryDragon.business.domain.item.WhatItemRestore;
+import angryDragon.business.domain.pet.Pet;
+import angryDragon.business.domain.status.Status;
+import angryDragon.business.domain.user.User;
+import angryDragon.business.domain.wallet.Wallet;
 
 import java.time.LocalDate;
 import java.util.List;
