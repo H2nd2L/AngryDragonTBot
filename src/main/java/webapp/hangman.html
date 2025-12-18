@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Виселица</title>
+    <link rel="stylesheet" href="hangman.css">
+</head>
+<body>
+
+<h1>Виселица</h1>
+
+<div id="hangmanWord">_ _ _ _ _</div>
+
+<div id="hangmanDrawing">
+    <div class="line base"></div>
+    <div class="line pole"></div>
+    <div class="line top"></div>
+    <div class="line rope"></div>
+    <div class="line head"></div>
+    <div class="line body"></div>
+    <div class="line arm-left"></div>
+    <div class="line arm-right"></div>
+    <div class="line leg-left"></div>
+    <div class="line leg-right"></div>
+</div>
+
+<div id="letters"></div>
+
+<div id="popup">
+    <div id="popupText"></div>
+    <button id="popupBtn">Играть снова</button>
+</div>
+
+<canvas id="snow"></canvas>
+
+<script src="hangman.js"></script>
+</body>
+</html>
