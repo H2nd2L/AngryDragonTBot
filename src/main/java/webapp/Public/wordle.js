@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const words = ['дракон','огонь','крыло','золото','пламя','пятно','актер','башня','ведро','басня','резня','звено','котел','мафия','бекон','берег','бисер','брошь','буфет','ветвь','выбор','город','дебют','дзюдо','досье','жених'];
   let secret = '';
   let tries = 0;
+  const mainBtn = document.getElementById('mainBtn');
+
+  mainBtn.addEventListener('click', () => {
+    // Перенаправление на главную страницу
+    window.location.href = 'index.html';
+  });
+
 
   function start() {
     secret = words[Math.floor(Math.random()*words.length)];

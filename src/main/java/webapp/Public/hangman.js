@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let word = '';
   let guessed = [];
   let errors = 0;
+const mainBtn = document.getElementById('mainBtn');
+
+  mainBtn.addEventListener('click', () => {
+    // Перенаправление на главную страницу
+    window.location.href = 'index.html';
+  });
 
   function start() {
     word = words[Math.floor(Math.random()*words.length)];
