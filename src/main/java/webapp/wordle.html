@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle на русском</title>
+    <link rel="stylesheet" href="wordle.css">
+</head>
+<body>
+
+<h1>📝 Угадай слово</h1>
+
+<div id="wordleBoard"></div>
+
+<div id="wordleInputContainer">
+    <input type="text" id="wordleInput" maxlength="5" placeholder="Введите слово">
+    <button id="wordleBtn">Проверить</button>
+    <div id="letterHint">Введите ровно 5 букв</div>
+</div>
+
+<div id="popup" class="hidden">
+    <div id="popupContent"></div>
+    <button id="popupBtn">Играть ещё раз</button>
+</div>
+
+<script src="wordle.js"></script>
+</body>
+</html>

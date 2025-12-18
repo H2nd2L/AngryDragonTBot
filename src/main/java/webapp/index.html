@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+
+<canvas id="snow"></canvas>
+    <div id="app">
+        <header>
+            <h1>Игры</h1>
+            <p>Выбирай игры и играй с питомцем!</p>
+        </header>
+
+        <section id="pet">
+            <img src="pet.png" alt="Питомец" id="pet_image">
+        </section>
+
+        <section id="games">
+            <h2>ИГРЫ</h2>
+            <div class="games-list">
+
+                <div class="game-card" data-game="bandit">
+                    <h3>Bandit</h3>
+                    <button onclick="location.href='bandit.html'">Играть</button>
+                </div>
+
+                <div class="game-card" data-game="tictactoe">
+                    <h3>Tictacoe</h3>
+                    <button onclick="location.href='ticTacToe.html'">Играть</button>
+                </div>
+
+                <div class="game-card" data-game="hangman">
+                    <h3>Hangman</h3>
+                    <button onclick="location.href='hangman.html'">Играть</button>
+                </div>
+
+                <div class="game-card" data-game="wordle">
+                    <h3>Wordle</h3>
+                    <button onclick="location.href='wordle.html'">Играть</button>
+                </div>
+
+            </div>
+        </section>
+        <div id="game-container"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
