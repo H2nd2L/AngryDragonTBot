@@ -171,6 +171,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID пользователя не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("U")){
+                    yield "Ошибка: ID пользователя должен начинаться с U. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("id", input);
                 session.setState(UserSession.SessionState.ADD_USER_WAITING_NAME);
                 yield "Шаг 2/2: Введите имя пользователя:";
@@ -190,6 +195,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID пользователя не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("U")){
+                    yield "Ошибка: ID пользователя должен начинаться с U. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 String result = walletFromSession(input);
                 session.reset();
                 yield result;
@@ -200,6 +210,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID пользователя не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("U")){
+                    yield "Ошибка: ID пользователя должен начинаться с U. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("userId", input);
                 session.setState(UserSession.SessionState.ADD_PET_WAITING_PET_ID);
                 yield "Шаг 2/3: Введите ID питомца (Пример: P4529):";
@@ -208,6 +223,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID питомца не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("P")){
+                    yield "Ошибка: ID питомца должен начинаться с P. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("petId", input);
                 session.setState(UserSession.SessionState.ADD_PET_WAITING_PET_NAME);
                 yield "Шаг 3/3: Введите имя питомца (Пример: Tigra):";
@@ -228,6 +248,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID питомца не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("P")){
+                    yield "Ошибка: ID питомца должен начинаться с P. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 String result = petStatusFromSession(input);
                 session.reset();
                 yield result;
@@ -238,6 +263,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID питомца не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("P")){
+                    yield "Ошибка: ID питомца должен начинаться с P. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 String result = inventoryFromSession(input);
                 session.reset();
                 yield result;
@@ -248,6 +278,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID питомца не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("P")){
+                    yield "Ошибка: ID питомца должен начинаться с P. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("petId", input);
                 session.setState(UserSession.SessionState.USE_ITEM_WAITING_ITEM_ID);
                 yield "Шаг 2/2: Введите ID предмета:";
@@ -256,6 +291,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID предмета не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("I")){
+                    yield "Ошибка: ID предмета должен начинаться с I. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 String petId = session.getData("petId");
                 String result = useItemFromSession(petId, input);
                 session.reset();
@@ -267,6 +307,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID пользователя не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("U")){
+                    yield "Ошибка: ID пользователя должен начинаться с U. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("userId", input);
                 session.setState(UserSession.SessionState.BUY_ITEM_WAITING_ITEM_ID);
                 yield "Шаг 2/2: Введите ID предмета:";
@@ -275,6 +320,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID предмета не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("I")){
+                    yield "Ошибка: ID предмета должен начинаться с I. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 String userId = session.getData("userId");
                 String result = buyItemFromSession(userId, input);
                 session.reset();
@@ -286,6 +336,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID пользователя не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("U")){
+                    yield "Ошибка: ID пользователя должен начинаться с U. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("userId", input);
                 session.setState(UserSession.SessionState.SELL_ITEM_WAITING_ITEM_ID);
                 yield "Шаг 2/2: Введите ID предмета:";
@@ -294,6 +349,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID предмета не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("I")){
+                    yield "Ошибка: ID предмета должен начинаться с I. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 String userId = session.getData("userId");
                 String result = sellItemFromSession(userId, input);
                 session.reset();
@@ -305,6 +365,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID предмета не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("I")){
+                    yield "Ошибка: ID предмета должен начинаться с I. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("id", input);
                 session.setState(UserSession.SessionState.ADD_ITEM_WAITING_NAME);
                 yield "Шаг 2/5: Введите название предмета:";
@@ -321,6 +386,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: цена предмета не может быть пустой. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > 500) {
+                    yield "Ошибка: цена не может быть меньше 0 или больше 500. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("price", input);
                 session.setState(UserSession.SessionState.ADD_ITEM_WAITING_STATUS_TYPE);
                 yield "Шаг 4/5: Введите тип статуса предмета (HUNGER | ENERGY | JOY):";
@@ -329,6 +399,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: статус предмета не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!(input.equals("HUNGER") || input.equals("JOY") || input.equals("ENERGY"))){
+                    yield "Ошибка: выбран не существующий статус. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 session.putData("status", input);
                 session.setState(UserSession.SessionState.ADD_ITEM_WAITING_STATUS_VALUE);
                 yield "Шаг 5/5: Введите значение статуса (1-100):";
@@ -337,6 +412,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: значение статуса не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > 100){
+                    yield "Ошибка: значение восстановления не может быть меньше 0 или больше 100. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 String id = session.getData("id");
                 String name = session.getData("name");
                 int price = Integer.parseInt(session.getData("price"));
@@ -352,6 +432,11 @@ public class TgApiHandler {
                 if (input.isEmpty()) {
                     yield "Ошибка: ID предмета не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
+
+                if (!input.startsWith("I")){
+                    yield "Ошибка: ID предмета должен начинаться с I. Попробуйте ещё раз или введите /cancel:";
+                }
+
                 String result = addItemToShopFromSession(input);
                 session.reset();
                 yield result;
@@ -410,6 +495,10 @@ public class TgApiHandler {
             return "Ошибка: ID и имя не могут быть пустыми";
         }
 
+        if (!id.startsWith("U")) {
+            return "Ошибка: ID должен начинаться с U";
+        }
+
         try {
             User user = new User(id, name);
             repositoryComponent.getUsersRepository().addUser(user);
@@ -456,6 +545,10 @@ public class TgApiHandler {
 
         if(id.isEmpty()) {
             return "Ошибка: ID не может быть пустым";
+        }
+
+        if (!id.startsWith("U")) {
+            return "Ошибка: ID должен начинаться с U";
         }
 
         try {
@@ -512,6 +605,14 @@ public class TgApiHandler {
             return "Ошибка: ID пользователя, ID питомца и имя не могут быть пустыми";
         }
 
+        if (!userId.startsWith("U")) {
+            return "Ошибка: ID пользователя должен начинаться с U";
+        }
+
+        if (!petId.startsWith("U")) {
+            return "Ошибка: ID питомца должен начинаться с P";
+        }
+
         try {
             Pet pet = new Pet(userId, LocalDate.now(), name, petId, new Status());
             repositoryComponent.getPetRepository().addPet(pet);
@@ -559,6 +660,10 @@ public class TgApiHandler {
 
         if(id.isEmpty()) {
             return "Ошибка: ID питомца не может быть пустым";
+        }
+
+        if (!id.startsWith("P")) {
+            return "Ошибка: ID должен начинаться с P";
         }
 
         try {
@@ -620,6 +725,10 @@ public class TgApiHandler {
 
         if(id.isEmpty()) {
             return "Ошибка: ID питомца не может быть пустым";
+        }
+
+        if (!id.startsWith("P")) {
+            return "Ошибка: ID должен начинаться с P";
         }
 
         try {
@@ -718,6 +827,14 @@ public class TgApiHandler {
 
         if (petId.isEmpty() || itemId.isEmpty()) {
             return "Ошибка: ID питомца и ID предмета не могут быть пустыми";
+        }
+
+        if (!petId.startsWith("P")) {
+            return "Ошибка: ID питомца должен начинаться с P";
+        }
+
+        if (!itemId.startsWith("I")) {
+            return "Ошибка: ID предмета должен начинаться с I";
         }
 
         try {
@@ -819,6 +936,14 @@ public class TgApiHandler {
             return "Ошибка: ID пользователя и ID предмета не могут быть пустыми";
         }
 
+        if (!userId.startsWith("U")) {
+            return "Ошибка: ID пользователя должен начинаться с U";
+        }
+
+        if (!itemId.startsWith("I")) {
+            return "Ошибка: ID предмета должен начинаться с I";
+        }
+
         try {
             List<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
             if(!catalog.contains(itemId)){
@@ -892,6 +1017,14 @@ public class TgApiHandler {
             return "Ошибка: ID пользователя и ID предмета не могут быть пустыми";
         }
 
+        if (!userId.startsWith("U")) {
+            return "Ошибка: ID пользователя должен начинаться с U";
+        }
+
+        if (!itemId.startsWith("I")) {
+            return "Ошибка: ID предмета должен начинаться с I";
+        }
+
         try {
             int userCashValue = repositoryComponent.getWalletsRepository().getUserCashValue(userId);
             Item item = repositoryComponent.getAllExistingItemsRepository().getItemById(itemId);
@@ -960,6 +1093,18 @@ public class TgApiHandler {
             return "Ошибка: параметры не могут быть пустыми";
         }
 
+        if (price < 1 || price > 500) {
+            return "Ошибка: цена не может быть меньше 0 или больше 500";
+        }
+
+        if (!(status.equals(WhatItemRestore.HUNGER) || status.equals(WhatItemRestore.ENERGY) || status.equals(WhatItemRestore.JOY))) {
+            return "Ошибка: неверный статус";
+        }
+
+        if (value < 1 || value > 100) {
+            return "Ошибка: значение восстановления не может быть меньше 0 или больше 100";
+        }
+
         try {
             Item item = new Item(id, name, value, status, price);
             repositoryComponent.getAllExistingItemsRepository().addItem(item);
@@ -1008,6 +1153,10 @@ public class TgApiHandler {
             return "Ошибка: ID предмета не может быть пустым";
         }
 
+        if (!id.startsWith("I")) {
+            return "Ошибка: ID предмета должен начинаться с I";
+        }
+
         try {
             List<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
             Item item = repositoryComponent.getAllExistingItemsRepository().getItemById(id);
@@ -1045,48 +1194,48 @@ public class TgApiHandler {
                 /games - Показать список доступных игр
                 
                 
-                • Управление пользователем:
+                👤 Управление пользователем:
                 /add_user - Добавить пользователя
-                    /add_user UserID|UserName
-                    Пример: /add_user U7895|Tim
+                    add_user UserID|UserName
+                    Пример: add_user U7895|Tim
                 /wallet - Показать баланс пользователя
-                    /wallet UserID
-                    Пример: /wallet U7895
+                    wallet UserID
+                    Пример: wallet U7895
                 
                 
-                • Управление питомцем:
+                🐹 Управление питомцем:
                 /add_pet - Добавить питомца
-                    /add_pet UserID|PetID|PetName
-                    Пример: /add_pet U7895|P4529|Tigra
+                    add_pet UserID|PetID|PetName
+                    Пример: add_pet U7895|P4529|Tigra
                 /pet_status - Посмотреть статус питомца
-                    /pet_status PetID
-                    Пример: /pet_status P4529
+                    pet_status PetID
+                    Пример: pet_status P4529
                 /inventory - Показать инвентарь питомца
-                    /inventory PetID
-                    Пример: /inventory P4529
+                    inventory PetID
+                    Пример: inventory P4529
                 /use_item - Использовать предмет
-                    /use_item PetID|ItemId
-                    Пример: /use_item P4529|I4789
+                    use_item PetID|ItemId
+                    Пример: use_item P4529|I4789
                 
                 
-                • Магазин и предметы:
+                🛒 Магазин и предметы:
                 /all_items - Показать все предметы
                 /add_item - Добавить предмет
-                    /add_item ItemID|ItemName|Price|StatusType|StatusValue
+                    add_item ItemID|ItemName|Price|StatusType|StatusValue
                        Price = {1, ..., 500}
                        StatusType = { HUNGER | ENERGY | JOY }
                        StatusValue = {1, ..., 100}
-                    Пример: /add_item I4789|Potato|15|HUNGER|10
+                    Пример: add_item I4789|Potato|15|HUNGER|10
                 /shop - Показать каталог магазина
                 /buy_item - Купить предмет
-                    /buy_item UserID|ItemID
-                    Пример: /buy_item U7895|I4789
+                    buy_item UserID|ItemID
+                    Пример: buy_item U7895|I4789
                 /sell_item - Продать предмет
-                    /sell_item UserID|ItemID
-                    Пример: /sell_item U7895|I4789
+                    sell_item UserID|ItemID
+                    Пример: sell_item U7895|I4789
                 /add_shop - Добавить предмет в магазин
-                    /add_shop ItemID
-                    Пример: /add_shop I4789
+                    add_shop ItemID
+                    Пример: add_shop I4789
                 
                 
                 ID пользователя должен начинаться с U (Пример: U7895)
@@ -1105,10 +1254,10 @@ public class TgApiHandler {
     private String games() {
         return """
                 Список игр:
-                 1) Wordle;
-                 2) Виселица;
-                 3) Однорукий бандит;
-                 4) Крестики-нолики.
+                  1) Wordle;
+                  2) Виселица;
+                  3) Однорукий бандит;
+                  4) Крестики-нолики.
                 """;
     }
 
@@ -1117,18 +1266,23 @@ public class TgApiHandler {
      */
     private String shop() {
         List<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
+
+        if(catalog.isEmpty()){
+            return "Каталог магазина пуст";
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Каталог магазина: \n\n");
         int counter = 1;
-        stringBuilder.append("  Каталог магазина: \n\n");
 
         for (String itemId : catalog) {
             Item item = repositoryComponent.getAllExistingItemsRepository().getItemById(itemId);
-            String itemInfo = counter + ")ITEM" + "\n" +
-                    "  ID: " + item.getItemId() + "\n" +
-                    "  Название: " + item.getItemName() + "\n" +
-                    "  Цена: " + item.getItemPrice() + "\n" +
-                    "  Тип: " + item.getItemType() + "\n" +
-                    "  Восстанавливает: " + item.getItemRegenerationAmount() + "\n\n";
+            String itemInfo = counter + ") ITEM" + "\n" +
+                    "   ID: " + item.getItemId() + "\n" +
+                    "   Название: " + item.getItemName() + "\n" +
+                    "   Цена: " + item.getItemPrice() + "\n" +
+                    "   Тип: " + item.getItemType() + "\n" +
+                    "   Восстанавливает: " + item.getItemRegenerationAmount() + "\n\n";
             stringBuilder.append(itemInfo);
             counter += 1;
         }
@@ -1148,15 +1302,15 @@ public class TgApiHandler {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Все существующие предметы: \n\n");
-
         int counter = 1;
+
         for (Item item : items) {
-            String itemInfo = counter + ")ITEM" + "\n" +
-                    "  ID: " + item.getItemId() + "\n" +
-                    "  Название: " + item.getItemName() + "\n" +
-                    "  Цена: " + item.getItemPrice() + "\n" +
-                    "  Тип: " + item.getItemType() + "\n" +
-                    "  Восстанавливает: " + item.getItemRegenerationAmount() + "\n\n";
+            String itemInfo = counter + ") ITEM" + "\n" +
+                    "   ID: " + item.getItemId() + "\n" +
+                    "   Название: " + item.getItemName() + "\n" +
+                    "   Цена: " + item.getItemPrice() + "\n" +
+                    "   Тип: " + item.getItemType() + "\n" +
+                    "   Восстанавливает: " + item.getItemRegenerationAmount() + "\n\n";
             stringBuilder.append(itemInfo);
             counter += 1;
         }
