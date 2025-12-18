@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let board = Array(9).fill(null);
   const player = '❌';
   const computer = '⭕';
+const mainBtn = document.getElementById('mainBtn');
+
+  mainBtn.addEventListener('click', () => {
+    // Перенаправление на главную страницу
+    window.location.href = 'index.html';
+  });
 
   function checkWin(p) {
     const wins = [

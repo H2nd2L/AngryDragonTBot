@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const symbols = ['🐲','💎','🔥','🍖','⭐'];
   let spinningIntervals = [null, null, null];
+const mainBtn = document.getElementById('mainBtn');
+
+  mainBtn.addEventListener('click', () => {
+    // Перенаправление на главную страницу
+    window.location.href = 'index.html';
+  });
 
   function randomSymbol() {
     return symbols[Math.floor(Math.random() * symbols.length)];
