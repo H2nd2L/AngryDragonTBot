@@ -1,13 +1,13 @@
 package angryDragon.components.repository;
 
-import angryDragon.repository.PetRepository;
-import angryDragon.repository.UsersRepository;
-import angryDragon.repository.AllExistingItemsRepository;
-import angryDragon.repository.WalletsRepository;
-import angryDragon.repository.impl.AllExistingItemsRepositoryImpl;
-import angryDragon.repository.impl.PetRepositoryImpl;
-import angryDragon.repository.impl.UsersRepositoryImpl;
-import angryDragon.repository.impl.WalletsRepositoryImpl;
+import angryDragon.business.repository.PetRepository;
+import angryDragon.business.repository.UsersRepository;
+import angryDragon.business.repository.AllExistingItemsRepository;
+import angryDragon.business.repository.WalletsRepository;
+import angryDragon.business.repository.impl.AllExistingItemsRepositoryImpl;
+import angryDragon.business.repository.impl.PetRepositoryImpl;
+import angryDragon.business.repository.impl.UsersRepositoryImpl;
+import angryDragon.business.repository.impl.WalletsRepositoryImpl;
 
 
 public class RepositoryComponent {
