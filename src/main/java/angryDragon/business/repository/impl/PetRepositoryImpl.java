@@ -34,4 +34,8 @@ public class PetRepositoryImpl implements PetRepository {
         return null;
     }
 
+    @Override
+    public List<Pet> returnPetRepository() {
+        return pets;
+    }
 }

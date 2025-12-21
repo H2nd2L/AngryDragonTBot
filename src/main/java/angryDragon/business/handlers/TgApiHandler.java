@@ -14,17 +14,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class TgApiHandler {
 
     private final RepositoryComponent repositoryComponent;
     private final ServiceComponent serviceComponent;
     private final Map<Long, UserSession> userSessions;
+    private final ScheduledExecutorService scheduler =
+            Executors.newScheduledThreadPool(1);
 
     public TgApiHandler() {
         this.repositoryComponent = new RepositoryComponent();
         this.serviceComponent = new ServiceComponent(repositoryComponent);
         this.userSessions =new HashMap<>();
+        statusDecrease();
+    }
+
+    /**
+     * Уменьшение статуса всех питомцев в фоне
+     */
+    private void statusDecrease() {
+        scheduler.scheduleAtFixedRate(() -> {
+            // Уменьшаем статистику каждому питомцу
+            for (Pet pet : repositoryComponent.getPetRepository().returnPetRepository()) {
+                Status status = pet.getStatus();
+                status.setEnergy(status.getEnergy() - 4);
+                status.setJoy(status.getJoy() - 3);
+                status.setHunger(status.getHunger() - 6);
+            }
+        }, 0, 2, TimeUnit.MINUTES); // Каждые 2 минуты
     }
 
     /**
@@ -366,11 +387,12 @@ public class TgApiHandler {
                     yield "Ошибка: ID предмета не может быть пустым. Попробуйте ещё раз или введите /cancel:";
                 }
 
+                session.putData("id", input);
+
                 if (!input.startsWith("I")){
                     yield "Ошибка: ID предмета должен начинаться с I. Попробуйте ещё раз или введите /cancel:";
                 }
 
-                session.putData("id", input);
                 session.setState(UserSession.SessionState.ADD_ITEM_WAITING_NAME);
                 yield "Шаг 2/5: Введите название предмета:";
             }
