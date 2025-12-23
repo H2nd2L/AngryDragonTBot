@@ -1,7 +1,6 @@
 package angryDragon.components.api;
 
-import angryDragon.business.domain.user.User;
-import angryDragon.business.handlers.TgApiHandler;
+import angryDragon.business.handlers.tgApiHandler.TgApiHandler;
 import angryDragon.config.BotConfig;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

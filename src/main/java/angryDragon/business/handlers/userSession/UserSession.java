@@ -1,11 +1,11 @@
-package angryDragon.business.handlers;
+package angryDragon.business.handlers.userSession;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserSession {
     private SessionState state;
-    private final Map<String, String> data;
+    private final Map<KeyPair, String> data;
 
     public UserSession() {
         this.state = SessionState.IDLE;
@@ -20,12 +20,12 @@ public class UserSession {
         this.state = state;
     }
 
-    public void putData(String key, String value) {
-        data.put(key, value);
+    public void putData(KeyPair keyPair, String value) {
+        data.put(keyPair, value);
     }
 
-    public String getData(String key) {
-        return data.get(key);
+    public String getData(KeyPair keyPair) {
+        return data.get(keyPair);
     }
 
     public void clearData() {
@@ -45,33 +45,18 @@ public class UserSession {
         IDLE,
 
         // Добавление пользователя
-        ADD_USER_WAITING_ID,
         ADD_USER_WAITING_NAME,
 
-        // Показ баланса пользователя
-        SHOW_WALLET_WAITING_ID,
-
         // Добавление питомца
-        ADD_PET_WAITING_USER_ID,
-        ADD_PET_WAITING_PET_ID,
         ADD_PET_WAITING_PET_NAME,
 
-        // Показ статуса питомца
-        SHOW_PET_STATUS_WAITING_ID,
-
-        // Показ инвентаря питомца
-        SHOW_INVENTORY_WAITING_ID,
-
         // Использование предмета
-        USE_ITEM_WAITING_PET_ID,
         USE_ITEM_WAITING_ITEM_ID,
 
         // Покупка предмета
-        BUY_ITEM_WAITING_USER_ID,
         BUY_ITEM_WAITING_ITEM_ID,
 
         // Продажа предмета
-        SELL_ITEM_WAITING_USER_ID,
         SELL_ITEM_WAITING_ITEM_ID,
 
         // Добавление предмета
@@ -82,6 +67,6 @@ public class UserSession {
         ADD_ITEM_WAITING_STATUS_VALUE,
 
         // Добавление предмета в магазин
-        ADD_SHOP_WAITING_ID
+        ADD_ITEM_TO_SHOP_WAITING_ID
     }
 }
