@@ -37,12 +37,15 @@ public class TgApiHandler {
         this.repositoryComponent = new RepositoryComponent();
         this.serviceComponent = new ServiceComponent(repositoryComponent);
         this.userSessions =new HashMap<>();
-        statusChange();
         this.basicFunctions = new BasicFunctions();
         this.userFunctions = new UserFunctions(repositoryComponent);
         this.petFunctions = new PetFunctions(repositoryComponent, serviceComponent);
         this.shopFunctions = new ShopFunctions(repositoryComponent, serviceComponent);
         this.adminFunctions = new AdminFunctions(repositoryComponent, serviceComponent);
+
+        statusChange();
+        repositoryComponent.getAllExistingItemsRepository().packOfItems();
+        serviceComponent.getShopService().packOfItems(repositoryComponent.getAllExistingItemsRepository().getAllExistingItems());
     }
 
     /**
