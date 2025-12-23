@@ -1,11 +1,13 @@
 package angryDragon.business.service.impl;
 
+import angryDragon.business.domain.item.Item;
 import angryDragon.business.repository.AllExistingItemsRepository;
 import angryDragon.business.repository.WalletsRepository;
 import angryDragon.business.service.ShopService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class ShopServiceImpl implements ShopService {
@@ -36,5 +38,12 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public void sellItem(String userId, int itemPrice, int userCash){
         walletsRepository.setUserCashValue(userId, (userCash+itemPrice));
+    }
+
+    @Override
+    public void packOfItems(Set<Item> items) {
+        for (Item item : items) {
+            currentShopCatalog.add(item.getItemId());
+        }
     }
 }

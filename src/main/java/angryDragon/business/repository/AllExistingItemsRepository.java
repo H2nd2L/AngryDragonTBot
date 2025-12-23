@@ -11,4 +11,6 @@ public interface AllExistingItemsRepository {
     Item getItemById(String itemId);
 
     Set<Item> getAllExistingItems();
+
+    void packOfItems();
 }

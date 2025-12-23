@@ -1,95 +1,75 @@
-package angryDragon.business.repository.impl;
+package angryDragon.business.addition;
 
 import angryDragon.business.domain.item.Item;
-import angryDragon.business.repository.AllExistingItemsRepository;
+import angryDragon.business.repository.impl.AllExistingItemsRepositoryImpl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import static angryDragon.business.domain.item.WhatItemRestore.*;
+import static angryDragon.business.domain.item.WhatItemRestore.ENERGY;
+import static angryDragon.business.domain.item.WhatItemRestore.HUNGER;
 import static angryDragon.business.domain.item.WhatItemRestore.JOY;
 
-public class AllExistingItemsRepositoryImpl implements AllExistingItemsRepository {
-    private final Set<Item> allItems = new HashSet<>();
 
-    @Override
-    public void addItem(Item item){
-        allItems.add(item);
-    }
+public class PackOfItems {
 
-    @Override
-    public Item getItemById(String itemId){
-        try{
-            for (Item item : allItems){
-                if (item.getItemId().equals(itemId)){
-                    return item;
-                }
-            }
-        } catch(Exception e){
-            System.out.println("Ошибка в AllExistingItems.getItemById: " + e.getMessage());
-        }
+    public PackOfItems(){
+        List<Item> items = new ArrayList<>();
 
-        return null;
-    }
-
-    @Override
-    public Set<Item> getAllExistingItems(){
-        return allItems;
-    }
-
-    @Override
-    public void packOfItems(){
         Item potato = new Item("I13853", "Potato", 7, HUNGER, 10);
-        allItems.add(potato);
+        items.add(potato);
         Item chips = new Item("I13575", "Chips Bay's", 20, HUNGER, 30);
-        allItems.add(chips);
+        items.add(chips);
         Item apple = new Item("I11124", "Apple", 12, HUNGER, 18);
-        allItems.add(apple);
+        items.add(apple);
         Item bread = new Item("I10701", "Bread", 4, HUNGER, 7);
-        allItems.add(bread);
+        items.add(bread);
         Item steak = new Item("I12004", "Steak", 35, HUNGER, 40);
-        allItems.add(steak);
+        items.add(steak);
         Item chicken = new Item("I10465", "Roasted Chicken", 28, HUNGER, 35);
-        allItems.add(chicken);
+        items.add(chicken);
         Item fish = new Item("I16767", "Grilled Fish", 24, HUNGER, 29);
-        allItems.add(fish);
+        items.add(fish);
         Item banana = new Item("I10207", "Banana", 12, HUNGER, 18);
-        allItems.add(banana);
+        items.add(banana);
         Item carrot = new Item("I10078", "Carrot", 8, HUNGER, 13);
-        allItems.add(carrot);
+        items.add(carrot);
         Item orange = new Item("I19009", "Orange", 14, HUNGER, 21);
-        allItems.add(orange);
+        items.add(orange);
 
         Item energyDrink1 = new Item("I81029", "Energy drink Wonster", 25, ENERGY, 30);
-        allItems.add(energyDrink1);
+        items.add(energyDrink1);
         Item energyDrink2 = new Item("I45703", "Energy drink BlueBull", 50, ENERGY, 45);
-        allItems.add(energyDrink2);
+        items.add(energyDrink2);
         Item matcha = new Item("I10014", "Matcha", 35, ENERGY, 38);
-        allItems.add(matcha);
+        items.add(matcha);
         Item coffee = new Item("I10618", "coffee", 30, ENERGY, 34);
-        allItems.add(coffee);
+        items.add(coffee);
         Item chocolateBar = new Item("I10015", "Chocolate Bar Nikers", 14, ENERGY, 19);
-        allItems.add(chocolateBar);
+        items.add(chocolateBar);
         Item nuts = new Item("I10023", "Mixed Nuts", 18, ENERGY, 24);
-        allItems.add(nuts);
+        items.add(nuts);
         Item proteinBar = new Item("I10030", "Protein Bar", 40, ENERGY, 41);
-        allItems.add(proteinBar);
+        items.add(proteinBar);
 
         Item marmelade = new Item("I48396", "Marmalade", 20, JOY, 25);
-        allItems.add(marmelade);
+        items.add(marmelade);
         Item candy = new Item("I10016", "Candy", 10, JOY, 14);
-        allItems.add(candy);
+        items.add(candy);
         Item iceCream = new Item("I10017", "Ice Cream Nilka", 35, JOY, 38);
-        allItems.add(iceCream);
+        items.add(iceCream);
         Item cakeSlice = new Item("I10018", "Cake Slice", 28, JOY, 32);
-        allItems.add(cakeSlice);
+        items.add(cakeSlice);
         Item lollipop = new Item("I10025", "Lollipop", 10, JOY, 2);
-        allItems.add(lollipop);
+        items.add(lollipop);
         Item brownie = new Item("I10026", "Brownie", 25, JOY, 29);
-        allItems.add(brownie);
+        items.add(brownie);
         Item pieSlice = new Item("I10027", "Apple Pie Slice", 22, JOY, 28);
-        allItems.add(pieSlice);
+        items.add(pieSlice);
+
+        for (Item item : items) {
+
+        }
     }
+
 }
