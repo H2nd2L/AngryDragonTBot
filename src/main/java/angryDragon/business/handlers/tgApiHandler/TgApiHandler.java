@@ -51,7 +51,8 @@ public class TgApiHandler {
         try(Scanner scanner = new Scanner(new File("config.txt"))) {
             while (scanner.hasNextLine()) {
                 String newItem = scanner.nextLine();
-                Item item = getItemFromParts(newItem);
+                String[] parts = getPartsFromString(newItem);
+                Item item = getItemFromParts(parts);
                 repositoryComponent.getAllExistingItemsRepository().addItem(item);
                 serviceComponent.getShopService().addItemIdToCatalog(item.getItemId());
             }
@@ -60,8 +61,11 @@ public class TgApiHandler {
         }
     }
 
-    private Item getItemFromParts(String newItem) {
-        String[] parts = newItem.split("[,\\s]+");
+    private String[] getPartsFromString(String string) {
+        return string.split("[,\\s]+");
+    }
+
+    private Item getItemFromParts(String[] parts) {
         return new Item(parts[0], parts[1], Integer.parseInt(parts[2]),
                 WhatItemRestore.valueOf(parts[3]), Integer.parseInt(parts[4]));
     }
