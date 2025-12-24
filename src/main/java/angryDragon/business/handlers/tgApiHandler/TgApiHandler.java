@@ -4,18 +4,15 @@ import angryDragon.business.domain.item.Item;
 import angryDragon.business.domain.item.WhatItemRestore;
 import angryDragon.business.domain.pet.Pet;
 import angryDragon.business.domain.status.Status;
-import angryDragon.business.domain.user.User;
-import angryDragon.business.domain.wallet.Wallet;
 import angryDragon.business.handlers.userSession.KeyPair;
 import angryDragon.business.handlers.userSession.UserSession;
 import angryDragon.components.repository.RepositoryComponent;
 import angryDragon.components.service.ServiceComponent;
 
-import java.time.LocalDate;
+import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,9 +40,25 @@ public class TgApiHandler {
         this.shopFunctions = new ShopFunctions(repositoryComponent, serviceComponent);
         this.adminFunctions = new AdminFunctions(repositoryComponent, serviceComponent);
 
+        defaultItemsInit();
         statusChange();
-        repositoryComponent.getAllExistingItemsRepository().packOfItems();
-        serviceComponent.getShopService().packOfItems(repositoryComponent.getAllExistingItemsRepository().getAllExistingItems());
+    }
+
+    /**
+     * Создание стандартных предметов и добавление их в магазин
+     */
+    private void defaultItemsInit(){
+        try(Scanner scanner = new Scanner(new File("config.txt"))) {
+            while (scanner.hasNextLine()) {
+                String newItem = scanner.nextLine();
+                String[] parts = newItem.split("[,\\s]+");
+                repositoryComponent.getAllExistingItemsRepository().addItem(new Item(parts[0], parts[1],
+                        Integer.parseInt(parts[2]), WhatItemRestore.valueOf(parts[3]), Integer.parseInt(parts[4])));
+                serviceComponent.getShopService().addItemIdToCatalog(parts[0]);
+            }
+        } catch (Exception e) {
+            System.out.println("Произошла ошибка при создании стандартных предметов:\n" + e.getMessage());
+        }
     }
 
     /**
@@ -141,7 +154,7 @@ public class TgApiHandler {
             return "Диалог отменён.";
         }
 
-        return switch (session.getState()) {
+        String sessionState = switch (session.getState()) {
             // Добавление пользователя
             case ADD_USER_WAITING_NAME -> {
                 if (input.isEmpty()) {
@@ -310,7 +323,10 @@ public class TgApiHandler {
                 session.reset();
                 yield "Произошла ошибка. Попробуйте ещё раз";
             }
-        };
-    }
 
+        };
+
+        return sessionState;
+
+    }
 }

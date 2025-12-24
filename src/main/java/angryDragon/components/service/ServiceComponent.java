@@ -12,9 +12,8 @@ public class ServiceComponent {
     private final ShopService shopService;
 
     public ServiceComponent(RepositoryComponent repositoryComponent){
-        this.inventoryService = new InventoryServiceImpl(); // нужен ли здесь inventory
+        this.inventoryService = new InventoryServiceImpl();
         this.shopService = new ShopServiceImpl(
-                repositoryComponent.getAllExistingItemsRepository(),
                 repositoryComponent.getWalletsRepository()
         );
     }

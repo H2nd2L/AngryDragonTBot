@@ -12,5 +12,4 @@ public interface AllExistingItemsRepository {
 
     Set<Item> getAllExistingItems();
 
-    void packOfItems();
 }
