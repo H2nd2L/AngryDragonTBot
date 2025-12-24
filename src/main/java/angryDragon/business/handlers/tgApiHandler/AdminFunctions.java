@@ -41,7 +41,7 @@ public class AdminFunctions {
      */
     String addItemToShopFromSession(String id) {
         try {
-            List<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
+            Set<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
             Item item = repositoryComponent.getAllExistingItemsRepository().getItemById(id);
 
             if(catalog.contains(id)){

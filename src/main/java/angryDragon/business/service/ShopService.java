@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ShopService {
-    List<String> getCurrentShopCatalog();
+    Set<String> getCurrentShopCatalog();
 
     void addItemIdToCatalog(String itemId);
 
@@ -14,5 +14,4 @@ public interface ShopService {
 
     void sellItem(String userId, int itemPrice, int userCash);
 
-    void packOfItems(Set<Item> items);
 }

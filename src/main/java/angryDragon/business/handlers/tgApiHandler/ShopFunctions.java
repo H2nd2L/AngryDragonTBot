@@ -6,6 +6,7 @@ import angryDragon.components.repository.RepositoryComponent;
 import angryDragon.components.service.ServiceComponent;
 
 import java.util.List;
+import java.util.Set;
 
 public class ShopFunctions {
     private final RepositoryComponent repositoryComponent;
@@ -23,7 +24,7 @@ public class ShopFunctions {
      */
     String buyItemFromSession(String userId, String itemId) {
         try {
-            List<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
+            Set<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
             if(!catalog.contains(itemId)){
                 return"Такого предмета нет в магазине";
             }
@@ -73,7 +74,7 @@ public class ShopFunctions {
      * @return Каталог магазина
      */
     String shop() {
-        List<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
+        Set<String> catalog = serviceComponent.getShopService().getCurrentShopCatalog();
 
         if(catalog.isEmpty()){
             return "Каталог магазина пуст";
