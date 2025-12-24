@@ -51,14 +51,19 @@ public class TgApiHandler {
         try(Scanner scanner = new Scanner(new File("config.txt"))) {
             while (scanner.hasNextLine()) {
                 String newItem = scanner.nextLine();
-                String[] parts = newItem.split("[,\\s]+");
-                repositoryComponent.getAllExistingItemsRepository().addItem(new Item(parts[0], parts[1],
-                        Integer.parseInt(parts[2]), WhatItemRestore.valueOf(parts[3]), Integer.parseInt(parts[4])));
-                serviceComponent.getShopService().addItemIdToCatalog(parts[0]);
+                Item item = getItemFromParts(newItem);
+                repositoryComponent.getAllExistingItemsRepository().addItem(item);
+                serviceComponent.getShopService().addItemIdToCatalog(item.getItemId());
             }
         } catch (Exception e) {
             System.out.println("Произошла ошибка при создании стандартных предметов:\n" + e.getMessage());
         }
+    }
+
+    private Item getItemFromParts(String newItem) {
+        String[] parts = newItem.split("[,\\s]+");
+        return new Item(parts[0], parts[1], Integer.parseInt(parts[2]),
+                WhatItemRestore.valueOf(parts[3]), Integer.parseInt(parts[4]));
     }
 
     /**
